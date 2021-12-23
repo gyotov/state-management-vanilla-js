@@ -35,15 +35,23 @@ In the components folder, we have example components, to show off the power of S
 ## Notes
 1. This is a simple idea of state management, that can be expanded to handle large data management, either from a database or an API.
 2. For the purpose of the example, there is no logic to render only specific part of the HTML, in order to lightweight it. If this becomes more complex, you should consider it.
-3. Again, for the purpose of the example, there is no logic, that handles the mutation of deeply nested objects. For example, the Shopify cart response. The mutation happens in `store/store.js` here:
+3. This little example, can be used to empower your website/app with global state management. All you need to do, is:
+- To modify the initial `state.js` file to suit your needs. For example:
 ```
-this.state = Object.assign(
-  this.state,
-  this.mutations[mutation](this.state, payload)
-)
+export default {
+  product: [object Object],
+  cart: [object Object],
+  collection: [object Object],
+  filters: [object Object],
+  ...and so on
+}
 ```
-`Object.assign` can not merge deeply nested objects, like: `cart.items[1].options`, etc...
-Therefore, if you plan to use it that way, you should consider such handler.
+- Then, to mutate this data, you need to add/modify actions/mutations methods, according to your logic
+- Lastly, wire up your components to subscribe to changes in the related state
+- In most cases, you would not want to modify the following files:
+`store.js`
+`store/index.js`
+`lib/events.js`
 
 ## State management application areas:
 1. Complex apps/websites, requiring multiple elements to use the same data, updating on-the-go.
